@@ -1,40 +1,60 @@
 // components/HomeScreen.jsx
+import React, { useEffect, useState } from 'react';
+import { View, Text, Button, StyleSheet, ImageBackground } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import quotesData from '../data/data.json';
 
-import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import DailyQuote from './DailyQuote';
-
-const HomeScreen = ({ navigation, route }) => {
-  const { selectedAuthors, interval, language } = route.params || {};
-  const [quoteInterval, setQuoteInterval] = useState(interval || '24');
-  const [currentLanguage, setCurrentLanguage] = useState(language || 'en');
+const HomeScreen = ({ navigation }) => {
+  const [quote, setQuote] = useState(null);
+  const [selectedAuthors, setSelectedAuthors] = useState([]);
 
   useEffect(() => {
-    if (interval) setQuoteInterval(interval);
-    if (language) setCurrentLanguage(language);
-  }, [interval, language]);
+    const loadSelectedAuthors = async () => {
+      const storedAuthors = await AsyncStorage.getItem('selectedAuthors');
+      if (storedAuthors) {
+        setSelectedAuthors(JSON.parse(storedAuthors));
+      } else {
+        setSelectedAuthors(["John Lennon"]); // Default author if none selected
+      }
+    };
+    loadSelectedAuthors();
+  }, []);
 
-  const navigateToAuthorCheckboxList = () => {
-    navigation.navigate('AuthorCheckboxList');
-  };
-
-  const navigateToSettings = () => {
-    navigation.navigate('Settings');
-  };
+  useEffect(() => {
+    const getRandomQuote = () => {
+      const authors = selectedAuthors.length
+        ? quotesData.authors.filter((author) => selectedAuthors.includes(author.name))
+        : quotesData.authors.filter((author) => author.name === "John Lennon");
+      const randomAuthor = authors[Math.floor(Math.random() * authors.length)];
+      const randomQuote = randomAuthor.quotes[Math.floor(Math.random() * randomAuthor.quotes.length)];
+      return { quote: randomQuote, author: randomAuthor.name, image: randomAuthor.image };
+    };
+    setQuote(getRandomQuote());
+  }, [selectedAuthors]);
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Welcome to Daily Quote App!</Text>
-      <DailyQuote selectedAuthors={selectedAuthors} interval={quoteInterval} language={currentLanguage} />
-      <TouchableOpacity onPress={navigateToAuthorCheckboxList} style={styles.card}>
-        <Ionicons name="book" size={24} color="black" style={styles.icon} />
-        <Text style={styles.cardText}>Discover Authors</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={navigateToSettings} style={styles.card}>
-        <Ionicons name="settings" size={24} color="black" style={styles.icon} />
-        <Text style={styles.cardText}>Settings</Text>
-      </TouchableOpacity>
+      <Text style={styles.title}>Daily Quotes</Text>
+      {quote && (
+        <ImageBackground
+          source={{ uri: quote.image }}
+          style={styles.authorImage}
+          imageStyle={{ borderRadius: 400 }}
+        >
+          <View style={styles.overlay}>
+            <Text style={styles.quote}>"{quote.quote}"</Text>
+            <Text style={styles.author}>- {quote.author}</Text>
+          </View>
+        </ImageBackground>
+      )}
+      <Button
+        title="Discover Authors"
+        onPress={() => navigation.navigate('AuthorCheckboxList')}
+      />
+      <Button
+        title="Settings"
+        onPress={() => navigation.navigate('Settings')}
+      />
     </View>
   );
 };
@@ -44,25 +64,38 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    padding: 20,
   },
   title: {
-    fontSize: 20,
+    fontSize: 24,
     marginBottom: 20,
   },
-  card: {
-    flexDirection: 'row',
+  authorImage: {
+    width: 200,
+    height: 200,
+    justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f0f0f0',
-    padding: 10,
+    marginBottom: 20,
+  },
+  overlay: {
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
     borderRadius: 10,
-    elevation: 3,
-    marginTop: 10,
+    padding: 20,
+    position: 'absolute',
+    top: 10,
+    left: 10,
   },
-  icon: {
-    marginRight: 10,
-  },
-  cardText: {
+  quote: {
+    fontStyle: 'italic',
+    color: 'white',
+    textAlign: 'center',
     fontSize: 16,
+  },
+  author: {
+    fontWeight: 'bold',
+    color: 'white',
+    fontSize: 20,
+    textAlign: 'center',
   },
 });
 

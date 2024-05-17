@@ -1,47 +1,83 @@
 // components/Settings.jsx
-
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
-import RNPickerSelect from 'react-native-picker-select';
+import { View, Text, Button, Platform, StyleSheet } from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as Notifications from 'expo-notifications';
 
-const Settings = ({ navigation }) => {
-  const [interval, setInterval] = useState('24'); // Default interval in hours
-  const [language, setLanguage] = useState('en'); // Default language
+const Settings = () => {
+  const [date, setDate] = useState(new Date());
+  const [show, setShow] = useState(false);
 
-  const handleSaveSettings = () => {
-    // Save the settings (e.g., to local storage or context)
-    navigation.navigate('Home', { interval, language });
+  useEffect(() => {
+    const loadNotificationTime = async () => {
+      const storedTime = await AsyncStorage.getItem('notificationTime');
+      if (storedTime) {
+        setDate(new Date(storedTime));
+      }
+    };
+    loadNotificationTime();
+  }, []);
+
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShow(Platform.OS === 'ios');
+    setDate(currentDate);
+    AsyncStorage.setItem('notificationTime', currentDate.toISOString());
+  };
+
+  const showDatePicker = () => {
+    setShow(true);
+  };
+
+  const enableNotifications = async () => {
+    const { status } = await Notifications.requestPermissionsAsync();
+    if (status === 'granted') {
+      const storedTime = await AsyncStorage.getItem('notificationTime');
+      const notificationTime = storedTime ? new Date(storedTime) : new Date();
+      notificationTime.setSeconds(0);
+
+      await Notifications.cancelAllScheduledNotificationsAsync();
+      Notifications.scheduleNotificationAsync({
+        content: {
+          title: "Daily Quote",
+          body: "Check out your daily quote!",
+        },
+        trigger: {
+          hour: notificationTime.getHours(),
+          minute: notificationTime.getMinutes(),
+          repeats: true,
+        },
+      });
+    }
+  };
+
+  const sendTestNotification = async () => {
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: "Test Notification",
+        body: "This is a test notification!",
+      },
+      trigger: null,
+    });
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Settings</Text>
-      
-      <Text style={styles.label}>Quote Change Interval (hours):</Text>
-      <RNPickerSelect
-        onValueChange={(value) => setInterval(value)}
-        items={[
-          { label: '1 hour', value: '1' },
-          { label: '6 hours', value: '6' },
-          { label: '12 hours', value: '12' },
-          { label: '24 hours', value: '24' },
-        ]}
-        value={interval}
-        style={pickerSelectStyles}
-      />
-
-      <Text style={styles.label}>Language:</Text>
-      <RNPickerSelect
-        onValueChange={(value) => setLanguage(value)}
-        items={[
-          { label: 'English', value: 'en' },
-          { label: 'Spanish', value: 'es' },
-        ]}
-        value={language}
-        style={pickerSelectStyles}
-      />
-
-      <Button title="Save Settings" onPress={handleSaveSettings} />
+      <Button onPress={showDatePicker} title="Set Notification Time" />
+      {show && (
+        <DateTimePicker
+          value={date}
+          mode="time"
+          is24Hour={true}
+          display="default"
+          onChange={onChange}
+        />
+      )}
+      <Text>Notification Time: {date.toLocaleTimeString()}</Text>
+      <Button onPress={enableNotifications} title="Enable Notifications" />
+      <Button onPress={sendTestNotification} title="Send Test Notification" />
     </View>
   );
 };
