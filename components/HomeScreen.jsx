@@ -32,6 +32,21 @@ const HomeScreen = ({ navigation }) => {
     setQuote(getRandomQuote());
   }, [selectedAuthors]);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const getRandomQuote = () => {
+        const authors = selectedAuthors.length
+          ? quotesData.authors.filter((author) => selectedAuthors.includes(author.name))
+          : quotesData.authors.filter((author) => author.name === "John Lennon");
+        const randomAuthor = authors[Math.floor(Math.random() * authors.length)];
+        const randomQuote = randomAuthor.quotes[Math.floor(Math.random() * randomAuthor.quotes.length)];
+        return { quote: randomQuote, author: randomAuthor.name, image: randomAuthor.image };
+      };
+      setQuote(getRandomQuote());
+    }, 10000); // Change quote every 10 seconds
+    return () => clearInterval(interval);
+  }, [selectedAuthors]);
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Daily Quotes</Text>

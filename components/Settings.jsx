@@ -4,10 +4,22 @@ import { View, Text, Button, Platform, StyleSheet } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Notifications from 'expo-notifications';
+import quotesData from '../data/data.json';
 
 const Settings = () => {
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
+  const [selectedAuthors, setSelectedAuthors] = useState([]);
+
+  useEffect(() => {
+    const loadSelectedAuthors = async () => {
+      const storedAuthors = await AsyncStorage.getItem('selectedAuthors');
+      if (storedAuthors) {
+        setSelectedAuthors(JSON.parse(storedAuthors));
+      }
+    };
+    loadSelectedAuthors();
+  }, []);
 
   useEffect(() => {
     const loadNotificationTime = async () => {
@@ -30,6 +42,15 @@ const Settings = () => {
     setShow(true);
   };
 
+  const getRandomQuote = () => {
+    const authors = selectedAuthors.length
+      ? quotesData.authors.filter((author) => selectedAuthors.includes(author.name))
+      : quotesData.authors.filter((author) => author.name === "John Lennon");
+    const randomAuthor = authors[Math.floor(Math.random() * authors.length)];
+    const randomQuote = randomAuthor.quotes[Math.floor(Math.random() * randomAuthor.quotes.length)];
+    return { quote: randomQuote, author: randomAuthor.name };
+  };
+
   const enableNotifications = async () => {
     const { status } = await Notifications.requestPermissionsAsync();
     if (status === 'granted') {
@@ -38,10 +59,11 @@ const Settings = () => {
       notificationTime.setSeconds(0);
 
       await Notifications.cancelAllScheduledNotificationsAsync();
+      const { quote, author } = getRandomQuote();
       Notifications.scheduleNotificationAsync({
         content: {
-          title: "Daily Quote",
-          body: "Check out your daily quote!",
+          title: `Quote by ${author}`,
+          body: quote,
         },
         trigger: {
           hour: notificationTime.getHours(),
@@ -53,10 +75,11 @@ const Settings = () => {
   };
 
   const sendTestNotification = async () => {
+    const { quote, author } = getRandomQuote();
     await Notifications.scheduleNotificationAsync({
       content: {
-        title: "Test Notification",
-        body: "This is a test notification!",
+        title: `Quote by ${author}`,
+        body: quote,
       },
       trigger: null,
     });
@@ -85,41 +108,14 @@ const Settings = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
     padding: 20,
   },
   title: {
     fontSize: 24,
     marginBottom: 20,
   },
-  label: {
-    fontSize: 16,
-    marginBottom: 10,
-  },
 });
-
-const pickerSelectStyles = {
-  inputIOS: {
-    fontSize: 16,
-    paddingVertical: 12,
-    paddingHorizontal: 10,
-    borderWidth: 1,
-    borderColor: 'gray',
-    borderRadius: 4,
-    color: 'black',
-    paddingRight: 30, // to ensure the text is never behind the icon
-    marginBottom: 20,
-  },
-  inputAndroid: {
-    fontSize: 16,
-    paddingHorizontal: 10,
-    paddingVertical: 8,
-    borderWidth: 0.5,
-    borderColor: 'gray',
-    borderRadius: 8,
-    color: 'black',
-    paddingRight: 30, // to ensure the text is never behind the icon
-    marginBottom: 20,
-  },
-};
 
 export default Settings;
