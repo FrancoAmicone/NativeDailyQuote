@@ -1,0 +1,40 @@
+{
+  "authors": [
+    {
+      "id": 1,
+      "name": "John Lennon",
+      "quotes": [
+        "Life is what happens when you're busy making other plans.",
+        "Time you enjoy wasting, was not wasted."
+      ],
+      "image": "https://akamai.sscdn.co/uploadfile/letras/fotos/c/c/5/7/cc5781ec76634979f9151d8efe000a44.jpg"
+    },
+    {
+      "id": 2,
+      "name": "Marco Aurelio",
+      "quotes": [
+        "The happiness of your life depends upon the quality of your thoughts.",
+        "You have power over your mind - not outside events. Realize this, and you will find strength."
+      ],
+      "image": "https://www.alejandradeargos.com/images/articulos/Filosofos/Marco_Aurelio/Marco_Aurellio_Museo_Metropolitano.jpg"
+    },
+    {
+      "id": 3,
+      "name": "Buda",
+      "quotes": [
+        "The mind is everything. What you think you become.",
+        "Health is the greatest gift, contentment the greatest wealth, faithfulness the best relationship."
+      ],
+      "image": "https://www.clarin.com/img/2020/07/15/Or0G3qiem_720x0__1.jpg"
+    },
+    {
+      "id": 4,
+      "name": "Slavoj Žižek",
+      "quotes": [
+        "We live in a strange world where the more you talk about sex, the less you talk about the truth.",
+        "Happiness is the moment when you cease to fear."
+      ],
+      "image": "https://d.newsweek.com/en/full/258404/7-11-slavojzizek.jpg"
+    }
+  ]
+}
