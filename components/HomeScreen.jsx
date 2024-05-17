@@ -1,7 +1,9 @@
 // components/HomeScreen.jsx
 import React, { useEffect, useState } from 'react';
-import { View, Text, Button, StyleSheet, ImageBackground } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Ionicons } from '@expo/vector-icons';
+
 import quotesData from '../data/data.json';
 
 const HomeScreen = ({ navigation }) => {
@@ -62,14 +64,15 @@ const HomeScreen = ({ navigation }) => {
           </View>
         </ImageBackground>
       )}
-      <Button
-        title="Discover Authors"
-        onPress={() => navigation.navigate('AuthorCheckboxList')}
-      />
-      <Button
-        title="Settings"
-        onPress={() => navigation.navigate('Settings')}
-      />
+      <TouchableOpacity  onPress={() => navigation.navigate('AuthorCheckboxList')} style={styles.card}>
+        <Ionicons name="book" size={24} color="black" style={styles.icon} />
+        <Text style={styles.cardText}>Discover Authors</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('Settings')} style={styles.card}>
+        <Ionicons name="settings" size={24} color="black" style={styles.icon} />
+        <Text style={styles.cardText}>Settings</Text>
+      </TouchableOpacity>
+    
     </View>
   );
 };
@@ -82,35 +85,55 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   title: {
-    fontSize: 24,
+    fontSize: 20,
     marginBottom: 20,
   },
   authorImage: {
-    width: 200,
-    height: 200,
+    width: 300,
+    height: 550,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 20,
   },
   overlay: {
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    borderRadius: 10,
+    borderRadius: 1000, // Un valor grande para asegurarte de que sea un círculo
     padding: 20,
     position: 'absolute',
-    top: 10,
-    left: 10,
+    width: 250,
+    height: 250,
+    justifyContent: 'center', // Para centrar el contenido verticalmente
+    alignItems: 'center', // Para centrar el contenido horizontalmente
+    top: 270,
   },
   quote: {
     fontStyle: 'italic',
     color: 'white',
     textAlign: 'center',
-    fontSize: 16,
+    fontSize: 18,
+    paddingHorizontal: 20, // Para evitar que el texto se extienda más allá del círculo
   },
   author: {
     fontWeight: 'bold',
     color: 'white',
-    fontSize: 20,
+    fontSize: 23,
     textAlign: 'center',
+    marginTop: 10, // Espacio entre el texto de la cita y el del autor
+  },
+  card: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#f0f0f0',
+    padding: 10,
+    borderRadius: 10,
+    elevation: 3,
+    marginTop: 10,
+  },
+  icon: {
+    marginRight: 10,
+  },
+  cardText: {
+    fontSize: 16,
   },
 });
 

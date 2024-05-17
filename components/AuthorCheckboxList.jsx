@@ -1,6 +1,6 @@
 // components/AuthorCheckboxList.jsx
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import quotesData from '../data/data.json';
 
@@ -41,9 +41,12 @@ const AuthorCheckboxList = ({ navigation }) => {
             style={styles.itemContainer}
             onPress={() => toggleAuthorSelection(item.name)}
           >
-            <View style={styles.authorImage}>
+          <ImageBackground
+              source={{ uri: item.image }} // Suponiendo que la ruta de la imagen está en la propiedad 'image' de cada autor en quotesData
+              style={styles.authorImage}
+            >
               <Text style={styles.authorName}>{item.name}</Text>
-            </View>
+            </ImageBackground>
             <Text>{selectedAuthors.includes(item.name) ? '-' : '+'}</Text>
           </TouchableOpacity>
         )}
@@ -63,25 +66,27 @@ const styles = StyleSheet.create({
   itemContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 10,
+    marginBottom: 5,
     padding: 10,
     backgroundColor: '#f0f0f0',
     borderRadius: 10,
   },
   authorImage: {
-    width: 50,
-    height: 50,
+    width: 350,
+    height: 120,
     marginRight: 10,
     justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#e0e0e0',
-    borderRadius: 25,
+    padding:20,
+    alignItems: 'left',
+
+
   },
   authorName: {
-    fontSize: 16,
+    fontSize: 20,
+    fontWeight:"400",
   },
   confirmButton: {
-    marginTop: 20,
+    marginTop: 10,
     padding: 10,
     backgroundColor: '#007bff',
     borderRadius: 5,
