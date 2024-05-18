@@ -82,8 +82,9 @@ const styles = StyleSheet.create({
 
   },
   authorName: {
-    fontSize: 20,
-    fontWeight:"400",
+    fontSize: 21,
+    fontWeight:"600",
+    color:'#fff'
   },
   confirmButton: {
     marginTop: 10,
