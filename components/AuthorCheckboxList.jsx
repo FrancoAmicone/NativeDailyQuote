@@ -78,11 +78,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding:20,
     alignItems: 'left',
-
+    
 
   },
   authorName: {
-    fontSize: 21,
+    fontSize: 20,
     fontWeight:"600",
     color:'#fff'
   },

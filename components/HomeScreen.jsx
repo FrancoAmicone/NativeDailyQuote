@@ -20,27 +20,38 @@ const HomeScreen = ({ navigation }) => {
     loadSelectedAuthors();
   }, []);
 
-  const getRandomQuote = () => {
-    const authors = selectedAuthors.length
-      ? quotesData.authors.filter((author) => selectedAuthors.includes(author.name))
-      : quotesData.authors.filter((author) => author.name === "John Lennon");
-
-    if (authors.length === 0) return null;
-
-    const randomAuthor = authors[Math.floor(Math.random() * authors.length)];
-
-    if (!randomAuthor.quotes || randomAuthor.quotes.length === 0) return null;
-
-    const randomQuote = randomAuthor.quotes[Math.floor(Math.random() * randomAuthor.quotes.length)];
-    return { quote: randomQuote, author: randomAuthor.name, image: randomAuthor.image };
-  };
-
   useEffect(() => {
+    const getRandomQuote = () => {
+      const authors = selectedAuthors.length
+        ? quotesData.authors.filter((author) => selectedAuthors.includes(author.name))
+        : quotesData.authors.filter((author) => author.name === "John Lennon");
+        
+      if (authors.length > 0) {
+        const randomAuthor = authors[Math.floor(Math.random() * authors.length)];
+        const randomQuote = randomAuthor.quotes[Math.floor(Math.random() * randomAuthor.quotes.length)];
+        return { quote: randomQuote, author: randomAuthor.name, image: randomAuthor.image };
+      }
+      return { quote: "No quotes available", author: "", image: "" }; // handle empty authors case
+    };
+
     setQuote(getRandomQuote());
   }, [selectedAuthors]);
 
   useEffect(() => {
     const interval = setInterval(() => {
+      const getRandomQuote = () => {
+        const authors = selectedAuthors.length
+          ? quotesData.authors.filter((author) => selectedAuthors.includes(author.name))
+          : quotesData.authors.filter((author) => author.name === "John Lennon");
+        
+        if (authors.length > 0) {
+          const randomAuthor = authors[Math.floor(Math.random() * authors.length)];
+          const randomQuote = randomAuthor.quotes[Math.floor(Math.random() * randomAuthor.quotes.length)];
+          return { quote: randomQuote, author: randomAuthor.name, image: randomAuthor.image };
+        }
+        return { quote: "No quotes available", author: "", image: "" }; // handle empty authors case
+      };
+
       setQuote(getRandomQuote());
     }, 10000); // Change quote every 10 seconds
     return () => clearInterval(interval);
@@ -61,7 +72,7 @@ const HomeScreen = ({ navigation }) => {
           </View>
         </ImageBackground>
       )}
-      <TouchableOpacity onPress={() => navigation.navigate('AuthorCheckboxList')} style={styles.card}>
+      <TouchableOpacity  onPress={() => navigation.navigate('AuthorCheckboxList')} style={styles.card}>
         <Ionicons name="book" size={24} color="black" style={styles.icon} />
         <Text style={styles.cardText}>Discover Authors</Text>
       </TouchableOpacity>
@@ -120,7 +131,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#f0f0f0',
-    padding: 10,
+    padding: 9,
     borderRadius: 10,
     elevation: 3,
     marginTop: 10,
