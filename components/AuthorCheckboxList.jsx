@@ -1,22 +1,35 @@
 // components/AuthorCheckboxList.jsx
 
-import React, { useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity, Button, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, FlatList, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import quotesData from '../data/data.json';
 
 const AuthorCheckboxList = ({ navigation }) => {
-  const [selectedAuthors, setSelectedAuthors] = useState([]);
+  const [selectedAuthor, setSelectedAuthor] = useState('');
 
-  const toggleAuthorSelection = (author) => {
-    setSelectedAuthors((prevSelectedAuthors) =>
-      prevSelectedAuthors.includes(author)
-        ? prevSelectedAuthors.filter((a) => a !== author)
-        : [...prevSelectedAuthors, author]
-    );
+  useEffect(() => {
+    const loadSelectedAuthor = async () => {
+      const storedAuthor = await AsyncStorage.getItem('selectedAuthor');
+      if (storedAuthor) {
+        setSelectedAuthor(storedAuthor);
+      }
+    };
+    loadSelectedAuthor();
+  }, []);
+
+  const toggleAuthorSelection = async (author) => {
+    if (selectedAuthor === author) {
+      setSelectedAuthor('');
+      await AsyncStorage.removeItem('selectedAuthor');
+    } else {
+      setSelectedAuthor(author);
+      await AsyncStorage.setItem('selectedAuthor', author);
+    }
   };
 
   const handleConfirmSelection = () => {
-    navigation.navigate('Home', { selectedAuthors });
+    navigation.navigate('Home', { selectedAuthor });
   };
 
   return (
@@ -25,18 +38,21 @@ const AuthorCheckboxList = ({ navigation }) => {
         data={quotesData.authors}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
-          <View style={styles.itemContainer}>
-            <TouchableOpacity
-              style={styles.checkbox}
-              onPress={() => toggleAuthorSelection(item.name)}
-            >
-              {selectedAuthors.includes(item.name) && <View style={styles.checked} />}
-            </TouchableOpacity>
+          <TouchableOpacity
+            style={[
+              styles.itemContainer,
+              selectedAuthor === item.name && styles.selectedItemContainer,
+            ]}
+            onPress={() => toggleAuthorSelection(item.name)}
+          >
+            <Image source={{ uri: item.image }} style={styles.authorImage} />
             <Text style={styles.authorName}>{item.name}</Text>
-          </View>
+          </TouchableOpacity>
         )}
       />
-      <Button title="Confirm Selection" onPress={handleConfirmSelection} />
+      <TouchableOpacity style={styles.confirmButton} onPress={handleConfirmSelection}>
+        <Text style={styles.confirmButtonText}>Confirm Selection</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -50,22 +66,32 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 10,
-  },
-  checkbox: {
-    width: 20,
-    height: 20,
     borderWidth: 1,
-    borderColor: '#000',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: 10,
+    borderColor: 'transparent',
+    borderRadius: 10,
+    padding: 10,
   },
-  checked: {
-    width: 12,
-    height: 12,
-    backgroundColor: '#000',
+  selectedItemContainer: {
+    borderColor: 'black',
+  },
+  authorImage: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
   },
   authorName: {
+    marginLeft: 10,
+    fontSize: 16,
+  },
+  confirmButton: {
+    backgroundColor: '#007BFF',
+    padding: 10,
+    borderRadius: 10,
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  confirmButtonText: {
+    color: '#FFF',
     fontSize: 16,
   },
 });
