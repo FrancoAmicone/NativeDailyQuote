@@ -1,5 +1,3 @@
-// components/AuthorCheckboxList.jsx
-
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -29,7 +27,7 @@ const AuthorCheckboxList = ({ navigation }) => {
   };
 
   const handleConfirmSelection = () => {
-    navigation.navigate('Home', { selectedAuthor });
+    navigation.navigate('Home');
   };
 
   return (

@@ -6,56 +6,22 @@ import quotesData from '../data/data.json';
 
 const HomeScreen = ({ navigation }) => {
   const [quote, setQuote] = useState(null);
-  const [selectedAuthors, setSelectedAuthors] = useState([]);
 
   useEffect(() => {
-    const loadSelectedAuthors = async () => {
-      const storedAuthors = await AsyncStorage.getItem('selectedAuthors');
-      if (storedAuthors) {
-        setSelectedAuthors(JSON.parse(storedAuthors));
-      } else {
-        setSelectedAuthors(["John Lennon"]); // Default author if none selected
-      }
-    };
-    loadSelectedAuthors();
-  }, []);
-
-  useEffect(() => {
-    const getRandomQuote = () => {
-      const authors = selectedAuthors.length
-        ? quotesData.authors.filter((author) => selectedAuthors.includes(author.name))
-        : quotesData.authors.filter((author) => author.name === "John Lennon");
-        
-      if (authors.length > 0) {
-        const randomAuthor = authors[Math.floor(Math.random() * authors.length)];
-        const randomQuote = randomAuthor.quotes[Math.floor(Math.random() * randomAuthor.quotes.length)];
-        return { quote: randomQuote, author: randomAuthor.name, image: randomAuthor.image };
-      }
-      return { quote: "No quotes available", author: "", image: "" }; // handle empty authors case
-    };
-
-    setQuote(getRandomQuote());
-  }, [selectedAuthors]);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const getRandomQuote = () => {
-        const authors = selectedAuthors.length
-          ? quotesData.authors.filter((author) => selectedAuthors.includes(author.name))
-          : quotesData.authors.filter((author) => author.name === "John Lennon");
-        
-        if (authors.length > 0) {
-          const randomAuthor = authors[Math.floor(Math.random() * authors.length)];
-          const randomQuote = randomAuthor.quotes[Math.floor(Math.random() * randomAuthor.quotes.length)];
-          return { quote: randomQuote, author: randomAuthor.name, image: randomAuthor.image };
+    const loadSelectedAuthor = async () => {
+      const storedAuthor = await AsyncStorage.getItem('selectedAuthor');
+      if (storedAuthor) {
+        const author = quotesData.authors.find(author => author.name === storedAuthor);
+        if (author) {
+          const randomQuote = author.quotes[Math.floor(Math.random() * author.quotes.length)];
+          setQuote({ quote: randomQuote, author: author.name, image: author.image });
         }
-        return { quote: "No quotes available", author: "", image: "" }; // handle empty authors case
-      };
-
-      setQuote(getRandomQuote());
-    }, 10000); // Change quote every 10 seconds
-    return () => clearInterval(interval);
-  }, [selectedAuthors]);
+      } else {
+        setQuote({ quote: "No authors selected. Please select authors in the settings.", author: "", image: "" });
+      }
+    };
+    loadSelectedAuthor();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -68,11 +34,11 @@ const HomeScreen = ({ navigation }) => {
         >
           <View style={styles.overlay}>
             <Text style={styles.quote}>"{quote.quote}"</Text>
-            <Text style={styles.author}>- {quote.author}</Text>
+            <Text style={styles.author}>{quote.author ? `- ${quote.author}` : ""}</Text>
           </View>
         </ImageBackground>
       )}
-      <TouchableOpacity  onPress={() => navigation.navigate('AuthorCheckboxList')} style={styles.card}>
+      <TouchableOpacity onPress={() => navigation.navigate('AuthorCheckboxList')} style={styles.card}>
         <Ionicons name="book" size={24} color="black" style={styles.icon} />
         <Text style={styles.cardText}>Discover Authors</Text>
       </TouchableOpacity>
