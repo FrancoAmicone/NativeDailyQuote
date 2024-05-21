@@ -1,25 +1,33 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ImageBackground } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Ionicons } from '@expo/vector-icons';
 import quotesData from '../data/data.json';
+import { useFocusEffect } from '@react-navigation/native';
 
 const HomeScreen = ({ navigation }) => {
   const [quote, setQuote] = useState(null);
 
-  useEffect(() => {
-    const loadSelectedAuthor = async () => {
-      const storedAuthor = await AsyncStorage.getItem('selectedAuthor');
-      if (storedAuthor) {
-        const author = quotesData.authors.find(author => author.name === storedAuthor);
-        if (author) {
-          const randomQuote = author.quotes[Math.floor(Math.random() * author.quotes.length)];
-          setQuote({ quote: randomQuote, author: author.name, image: author.image });
-        }
-      } else {
-        setQuote({ quote: "No authors selected. Please select authors in the settings.", author: "", image: "" });
+  const loadSelectedAuthor = async () => {
+    const storedAuthor = await AsyncStorage.getItem('selectedAuthor');
+    if (storedAuthor) {
+      const author = quotesData.authors.find(author => author.name === storedAuthor);
+      if (author) {
+        const randomQuote = author.quotes[Math.floor(Math.random() * author.quotes.length)];
+        setQuote({ quote: randomQuote, author: author.name, image: author.image });
       }
-    };
+    } else {
+      setQuote({ quote: "No authors selected. Please select authors in the settings.", author: "", image: "" });
+    }
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      loadSelectedAuthor();
+    }, [])
+  );
+
+  useEffect(() => {
     loadSelectedAuthor();
   }, []);
 

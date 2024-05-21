@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "NombreDeTuProyecto",
-    "slug": "NombreDeTuProyecto",
+    "name": "DailyQuotes",
+    "slug": "DailyQuotes",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
