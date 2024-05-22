@@ -9,7 +9,9 @@
         "We accept reality so readily – perhaps because we sense that nothing is real.",
         "I am not sure that I exist, actually. I am all the writers that I have read, all the people that I have met, all the women that I have loved; all the cities I have visited."
       ],
-      "image": "https://rialta.org/wp-content/uploads/2019/10/Jorge-Luis-Borges-fotografiado-por-Brenno-Quaretti.jpg"
+      "image": "https://rialta.org/wp-content/uploads/2019/10/Jorge-Luis-Borges-fotografiado-por-Brenno-Quaretti.jpg",
+
+      "locked": false
     },
     {
       "id": 2,
@@ -19,7 +21,8 @@
         "Some people never go crazy. What truly horrible lives they must lead.",
         "You have to die a few times before you can really live."
       ],
-      "image": "https://pondus-hpg.s3.eu-central-1.amazonaws.com/fischer/public/Bukowski,Charles.jpg"
+      "image": "https://pondus-hpg.s3.eu-central-1.amazonaws.com/fischer/public/Bukowski,Charles.jpg",
+      "locked": false
     },
     {
       "id": 3,
@@ -29,7 +32,9 @@
         "That which does not kill us makes us stronger.",
         "To live is to suffer, to survive is to find some meaning in the suffering."
       ],
-      "image": "https://www.jotdown.es/wp-content/uploads/2022/05/Franziska-Nietzsche-y-Friedrich-Nietzsche-DP-800x534.jpg"
+      "image": "https://www.jotdown.es/wp-content/uploads/2022/05/Franziska-Nietzsche-y-Friedrich-Nietzsche-DP-800x534.jpg",
+      "locked": false
+
     },
     {
       "id": 4,
@@ -39,7 +44,9 @@
         "In the fight between you and the world, back the world.",
         "Youth is happy because it has the capacity to see beauty. Anyone who keeps the ability to see beauty never grows old."
       ],
-      "image": "https://cdn.culturagenial.com/es/imagenes/franz-kafka-og.jpg"
+      "image": "https://cdn.culturagenial.com/es/imagenes/franz-kafka-og.jpg",
+      "locked": true
+
     },
     {
       "id": 5,
@@ -49,7 +56,9 @@
         "To live without Hope is to Cease to live.",
         "The mystery of human existence lies not in just staying alive, but in finding something to live for."
       ],
-      "image": "https://historiauniversal.org/wp-content/uploads/Fyodor-Dostoevsky.jpeg"
+      "image": "https://historiauniversal.org/wp-content/uploads/Fyodor-Dostoevsky.jpeg",
+      "locked": true
+
     },
     {
       "id": 6,
@@ -59,7 +68,9 @@
         "The only way to deal with an unfree world is to become so absolutely free that your very existence is an act of rebellion.",
         "Live to the point of tears."
       ],
-      "image": "https://s1.elespanol.com/2021/01/22/el-cultural/553207210_218714447_1706x960.jpg"
+      "image": "https://s1.elespanol.com/2021/01/22/el-cultural/553207210_218714447_1706x960.jpg",
+      "locked": true
+
     },
     {
       "id": 8,
@@ -69,7 +80,9 @@
         "Hell is other people.",
         "Existence precedes and rules essence."
       ],
-      "image": "https://www.gaceta.unam.mx/wp-content/uploads/2020/04/sartre003.jpg"
+      "image": "https://www.gaceta.unam.mx/wp-content/uploads/2020/04/sartre003.jpg",
+      "locked": true
+
     },
     {
       "id": 9,
@@ -79,7 +92,9 @@
         "Words do not express thoughts very well. They always become a little different immediately after they are expressed, a little distorted, a little foolish.",
         "If you hate a person, you hate something in him that is part of yourself. What isn’t part of ourselves doesn’t disturb us."
       ],
-      "image": "https://www.mexicosocial.org/wp-content/uploads/2022/12/Hermann-Hesse.jpg"
+      "image": "https://www.mexicosocial.org/wp-content/uploads/2022/12/Hermann-Hesse.jpg",
+      "locked": true
+
     },
     {
       "id": 10,
@@ -89,7 +104,9 @@
         "Big Brother is watching you.",
         "The best books... are those that tell you what you know already."
       ],
-      "image": "https://rosettaedu.com/cdn/shop/collections/George_Orwell_press_photo.jpg?v=1708440342"
+      "image": "https://rosettaedu.com/cdn/shop/collections/George_Orwell_press_photo.jpg?v=1708440342",
+      "locked": true
+
     },
     {
       "id": 11,
@@ -99,7 +116,9 @@
         "Happiness is not achieved by the conscious pursuit of happiness; it is generally the by-product of other activities.",
         "Most human beings have an almost infinite capacity for taking things for granted."
       ],
-      "image": "https://masdemx.com/wp-content/uploads/2017/09/Aldous-Huxley-en-Mexico-Oaxaca-Mas-alla-del-Golfo-de-Mexico.jpg"
+      "image": "https://masdemx.com/wp-content/uploads/2017/09/Aldous-Huxley-en-Mexico-Oaxaca-Mas-alla-del-Golfo-de-Mexico.jpg",
+      "locked": true
+
     },
     {
       "id": 12,
@@ -109,7 +128,9 @@
         "All happy families are alike; each unhappy family is unhappy in its own way.",
         "If you want to be happy, be."
       ],
-      "image": "https://afisha.london/wp-content/uploads/2022/08/tolstoi_cover.jpg"
+      "image": "https://afisha.london/wp-content/uploads/2022/08/tolstoi_cover.jpg",
+      "locked": true
+
     },
     {
       "id": 13,
@@ -119,7 +140,9 @@
         "The director's task is to recreate life, its movement, its contradictions, its dynamic force, and to produce a synthesis as a testimony to the life of his time.",
         "Art affirms all that is best in man – hope, faith, love, beauty, prayer."
       ],
-      "image": "https://media.newyorker.com/photos/601b5bbe6fe3d515c89fe0c7/master/pass/210215_r37917.jpg"
+      "image": "https://media.newyorker.com/photos/601b5bbe6fe3d515c89fe0c7/master/pass/210215_r37917.jpg",
+      "locked": true
+
     },
     {
       "id": 14,
@@ -129,7 +152,9 @@
         "The philosophers have only interpreted the world, in various ways. The point, however, is to change it.",
         "From each according to his abilities, to each according to his needs."
       ],
-      "image": "https://ichef.bbci.co.uk/ace/ws/640/cpsprodpb/2BC5/production/_101150211_marx.jpg"
+      "image": "https://ichef.bbci.co.uk/ace/ws/640/cpsprodpb/2BC5/production/_101150211_marx.jpg",
+      "locked": true
+
     },
     {
       "id": 15,
@@ -139,7 +164,9 @@
         "Compassion is the basis of morality.",
         "The world is my idea."
       ],
-      "image": "https://omnesmag.com/wp-content/uploads/2022/08/Arthur_Schopenhauer_by_J_Schafer_1859b-1-1024x586.jpg"
+      "image": "https://omnesmag.com/wp-content/uploads/2022/08/Arthur_Schopenhauer_by_J_Schafer_1859b-1-1024x586.jpg",
+      "locked": true
+
     },
     {
       "id": 16,
@@ -149,7 +176,9 @@
         "I don't believe in charity; I believe in solidarity.",
         "History never really says goodbye. History says, 'See you later.'"
       ],
-      "image": "https://cloudfront-us-east-1.images.arcpublishing.com/infobae/ZVFCTXDFIBAKPIXLOGQXOCVC34.jpg"
+      "image": "https://cloudfront-us-east-1.images.arcpublishing.com/infobae/ZVFCTXDFIBAKPIXLOGQXOCVC34.jpg",
+      "locked": true
+
     },
     {
       "id": 17,
@@ -159,7 +188,9 @@
         "And in the end, it’s not the years in your life that count. It’s the life in your years.",
         "What good is a writer if he can’t destroy literature?"
       ],
-      "image": "https://media.admagazine.com/photos/618a63bca8ad6c5249a74efa/16:9/w_2656,h_1494,c_limit/74842.jpg"
+      "image": "https://media.admagazine.com/photos/618a63bca8ad6c5249a74efa/16:9/w_2656,h_1494,c_limit/74842.jpg",
+      "locked": true
+
     },
     {
       "id": 18,
@@ -169,7 +200,9 @@
         "Only in dreams, in poetry, in play do we sometimes arrive at what we were before we were this thing that, who knows, we are.",
         "I understand why I’ve lost people. I’ve lost them because I’ve tried to erase my marks. Because, each time, I wanted to erase every trace of me."
       ],
-      "image": "https://fotos.perfil.com/2022/09/24/trim/1280/720/alejandra-pizarnik-1425808.jpg"
+      "image": "https://fotos.perfil.com/2022/09/24/trim/1280/720/alejandra-pizarnik-1425808.jpg",
+      "locked": true
+
     },
     {
       "id": 19,
@@ -179,7 +212,9 @@
         "Desire is the essence of man.",
         "The mirror stage is a drama whose internal thrust is precipitated from insufficiency to anticipation."
       ],
-      "image": "https://www.elpsitio.com.ar/noticias/images/artsept22_tapab.jpg"
+      "image": "https://www.elpsitio.com.ar/noticias/images/artsept22_tapab.jpg",
+      "locked": true
+
     },
     {
       "id": 20,
@@ -189,7 +224,9 @@
         "Power is not an institution, and not a structure; neither is it a certain strength we are endowed with; it is the name that one attributes to a complex strategical situation in a particular society.",
         "The soul is the prison of the body."
       ],
-      "image": "https://artilleriainmanente.noblogs.org/files/2023/12/Michel-Foucault.jpg"
+      "image": "https://artilleriainmanente.noblogs.org/files/2023/12/Michel-Foucault.jpg",
+      "locked": true
+
     },
     {
       "id": 21,
@@ -199,7 +236,9 @@
         "I am incapable of conceiving infinity, and yet I do not accept finity.",
         "Change your life today. Don’t gamble on the future, act now, without delay."
       ],
-      "image": "https://images.pagina12.com.ar/styles/focal_16_9_960x540/public/2021-10/203795-beauvoirweb-afp-20-20-281-29.JPG?h=34770b54&itok=_WfUbLqb"
+      "image": "https://images.pagina12.com.ar/styles/focal_16_9_960x540/public/2021-10/203795-beauvoirweb-afp-20-20-281-29.JPG?h=34770b54&itok=_WfUbLqb",
+      "locked": true
+
     },
     {
       "id": 22,
@@ -209,7 +248,9 @@
         "Time you enjoy wasting, was not wasted.",
         "Reality leaves a lot to the imagination."
       ],
-      "image": "https://akamai.sscdn.co/uploadfile/letras/fotos/c/c/5/7/cc5781ec76634979f9151d8efe000a44.jpg"
+      "image": "https://akamai.sscdn.co/uploadfile/letras/fotos/c/c/5/7/cc5781ec76634979f9151d8efe000a44.jpg",
+      "locked": true
+
     },
     {
       "id": 23,
@@ -219,7 +260,9 @@
         "You have power over your mind - not outside events. Realize this, and you will find strength.",
         "The best revenge is to be unlike him who performed the injury."
       ],
-      "image": "https://www.alejandradeargos.com/images/articulos/Filosofos/Marco_Aurelio/Marco_Aurellio_Museo_Metropolitano.jpg"
+      "image": "https://www.alejandradeargos.com/images/articulos/Filosofos/Marco_Aurelio/Marco_Aurellio_Museo_Metropolitano.jpg",
+      "locked": true
+
     },
     {
       "id": 24,
@@ -229,7 +272,9 @@
         "Character is destiny.",
         "The only constant in life is change."
       ],
-      "image": "https://ichef.bbci.co.uk/images/ic/1200x675/p01h83jd.jpg"
+      "image": "https://ichef.bbci.co.uk/images/ic/1200x675/p01h83jd.jpg",
+      "locked": true
+
     },
     {
       "id": 25,
@@ -239,7 +284,9 @@
         "Nothing exists except atoms and empty space; everything else is opinion.",
         "The brave man is he who overcomes not only his enemies but his pleasures."
       ],
-      "image": "https://miro.medium.com/v2/resize:fit:1400/1*ZrSbXOha9zpD9EAU241c_g.jpeg"
+      "image": "https://miro.medium.com/v2/resize:fit:1400/1*ZrSbXOha9zpD9EAU241c_g.jpeg",
+      "locked": true
+
     },
     {
       "id": 26,
@@ -249,7 +296,9 @@
         "For never shall this prevail, that things that are not, are.",
         "Thought and being are the same."
       ],
-      "image": "https://miro.medium.com/v2/resize:fit:640/1*-laI1JcwuiG7sXzKuAKfDw.jpeg"
+      "image": "https://miro.medium.com/v2/resize:fit:640/1*-laI1JcwuiG7sXzKuAKfDw.jpeg",
+      "locked": true
+
     },
     {
       "id": 27,
@@ -259,7 +308,9 @@
         "As soon as laws are necessary for men, they are no longer fit for freedom.",
         "Do not say a little in many words but a great deal in a few."
       ],
-      "image": "https://cdn.hswstatic.com/gif/pyth.jpg"
+      "image": "https://cdn.hswstatic.com/gif/pyth.jpg",
+      "locked": true
+
     },
     {
       "id": 28,
@@ -269,7 +320,9 @@
         "The capitalist system is totalitarian. It forces people to constantly improve, optimize, and maximize performance.",
         "We are all working ourselves to death."
       ],
-      "image": "https://static.abc.es/media/cultura/2018/03/19/Chul-keVH--1240x698@abc.jpg"
+      "image": "https://static.abc.es/media/cultura/2018/03/19/Chul-keVH--1240x698@abc.jpg",
+      "locked": true
+
     },
     {
       "id": 29,
@@ -279,7 +332,9 @@
         "Happiness is the moment when you cease to fear.",
         "Words are never 'only words'; they matter because they define the contours of what we can do."
       ],
-      "image": "https://d.newsweek.com/en/full/258404/7-11-slavojzizek.jpg"
+      "image": "https://d.newsweek.com/en/full/258404/7-11-slavojzizek.jpg",
+      "locked": true
+
     },
     {
       "id": 30,
@@ -289,7 +344,9 @@
         "The ego is not master in its own house.",
         "One day, in retrospect, the years of struggle will strike you as the most beautiful."
       ],
-      "image": "https://upload.wikimedia.org/wikipedia/commons/3/36/Sigmund_Freud%2C_by_Max_Halberstadt_%28cropped%29.jpg"
+      "image": "https://upload.wikimedia.org/wikipedia/commons/3/36/Sigmund_Freud%2C_by_Max_Halberstadt_%28cropped%29.jpg",
+      "locked": true
+
     },
     {
       "id": 31,
@@ -299,7 +356,9 @@
         "Your visions will become clear only when you can look into your own heart. Who looks outside, dreams; who looks inside, awakes.",
         "Knowing your own darkness is the best method for dealing with the darknesses of other people."
       ],
-      "image": "https://www.toolshero.nl/wp-content/uploads/2022/11/carl-jung-toolshero.jpg"
+      "image": "https://www.toolshero.nl/wp-content/uploads/2022/11/carl-jung-toolshero.jpg",
+      "locked": true
+
     },
     {
       "id": 32,
@@ -309,7 +368,9 @@
         "Beauty in things exists in the mind which contemplates them.",
         "The life of man is of no greater importance to the universe than that of an oyster."
       ],
-      "image": "https://www.lavanguardia.com/files/content_image_mobile_filter/files/fp/uploads/2022/04/27/626933e5f1a81.r_d.2255-1412.jpeg"
+      "image": "https://www.lavanguardia.com/files/content_image_mobile_filter/files/fp/uploads/2022/04/27/626933e5f1a81.r_d.2255-1412.jpeg",
+      "locked": true
+
     },
     {
       "id": 33,
@@ -319,7 +380,9 @@
         "Live your life as though your every act were to become a universal law.",
         "Happiness is not an ideal of reason, but of imagination."
       ],
-      "image": "https://m.media-amazon.com/images/I/81fi42CL7pL._AC_UF1000,1000_QL80_.jpg"
+      "image": "https://m.media-amazon.com/images/I/81fi42CL7pL._AC_UF1000,1000_QL80_.jpg",
+      "locked": true
+
     },
     {
       "id": 34,
@@ -329,7 +392,9 @@
         "It is not the man who has too little, but the man who craves more, that is poor.",
         "We suffer more often in imagination than in reality."
       ],
-      "image": "https://lazonaveggie.com/wp-content/uploads/2023/09/seneca-8026630_1280-1.jpg?w=1024"
+      "image": "https://lazonaveggie.com/wp-content/uploads/2023/09/seneca-8026630_1280-1.jpg?w=1024",
+      "locked": true
+
     }
     
   ]

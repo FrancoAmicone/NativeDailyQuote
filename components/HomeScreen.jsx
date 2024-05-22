@@ -41,8 +41,9 @@ const HomeScreen = ({ navigation }) => {
           imageStyle={{ borderRadius: 400 }}
         >
           <View style={styles.overlay}>
+       
+            <Text style={styles.author}>{quote.author ? ` ${quote.author}` : ""}</Text>
             <Text style={styles.quote}>"{quote.quote}"</Text>
-            <Text style={styles.author}>{quote.author ? `- ${quote.author}` : ""}</Text>
           </View>
         </ImageBackground>
       )}

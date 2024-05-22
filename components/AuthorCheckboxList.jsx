@@ -5,6 +5,7 @@ import quotesData from '../data/data.json';
 
 const AuthorCheckboxList = ({ navigation }) => {
   const [selectedAuthor, setSelectedAuthor] = useState('');
+  const [unlockedAuthors, setUnlockedAuthors] = useState([]);
 
   useEffect(() => {
     const loadSelectedAuthor = async () => {
@@ -13,10 +14,24 @@ const AuthorCheckboxList = ({ navigation }) => {
         setSelectedAuthor(storedAuthor);
       }
     };
+    const loadUnlockedAuthors = async () => {
+      const storedUnlockedAuthors = await AsyncStorage.getItem('unlockedAuthors');
+      if (storedUnlockedAuthors) {
+        setUnlockedAuthors(JSON.parse(storedUnlockedAuthors));
+      }
+    };
     loadSelectedAuthor();
+    loadUnlockedAuthors();
   }, []);
 
   const toggleAuthorSelection = async (author) => {
+    const selectedAuthorData = quotesData.authors.find(item => item.name === author);
+    if (selectedAuthorData.locked && !unlockedAuthors.includes(author)) {
+      alert('This author is locked. Watch an ad to unlock.');
+      // Aquí se implementaría la lógica para mostrar la publicidad y desbloquear el autor.
+      return;
+    }
+
     if (selectedAuthor === author) {
       setSelectedAuthor('');
       await AsyncStorage.removeItem('selectedAuthor');
@@ -40,11 +55,13 @@ const AuthorCheckboxList = ({ navigation }) => {
             style={[
               styles.itemContainer,
               selectedAuthor === item.name && styles.selectedItemContainer,
+              item.locked && !unlockedAuthors.includes(item.name) && styles.lockedItemContainer,
             ]}
             onPress={() => toggleAuthorSelection(item.name)}
           >
             <Image source={{ uri: item.image }} style={styles.authorImage} />
             <Text style={styles.authorName}>{item.name}</Text>
+            {item.locked && !unlockedAuthors.includes(item.name) && <Text style={styles.lockedText}>Locked</Text>}
           </TouchableOpacity>
         )}
       />
@@ -72,6 +89,9 @@ const styles = StyleSheet.create({
   selectedItemContainer: {
     borderColor: 'black',
   },
+  lockedItemContainer: {
+    backgroundColor: '#d3d3d3',
+  },
   authorImage: {
     width: 50,
     height: 50,
@@ -80,6 +100,11 @@ const styles = StyleSheet.create({
   authorName: {
     marginLeft: 10,
     fontSize: 16,
+  },
+  lockedText: {
+    marginLeft: 10,
+    fontSize: 14,
+    color: 'red',
   },
   confirmButton: {
     backgroundColor: '#007BFF',
