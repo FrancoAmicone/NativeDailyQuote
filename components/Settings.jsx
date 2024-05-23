@@ -1,128 +1,103 @@
-// components/Settings.jsx
-
 import React, { useState, useEffect } from 'react';
-import { View, Text, Button, Platform, StyleSheet, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Button, Alert } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Notifications from 'expo-notifications';
+import { Ionicons } from '@expo/vector-icons';
+
 import quotesData from '../data/data.json';
 
-const Settings = () => {
-  const [date, setDate] = useState(new Date());
-  const [mode, setMode] = useState('time');
-  const [show, setShow] = useState(false);
+const Settings = ({ navigation }) => {
+  const [selectedTime, setSelectedTime] = useState(new Date());
+  const [showTimePicker, setShowTimePicker] = useState(false);
 
   useEffect(() => {
-    const loadNotificationTime = async () => {
+    const loadSettings = async () => {
       const storedTime = await AsyncStorage.getItem('notificationTime');
       if (storedTime) {
-        setDate(new Date(storedTime));
+        setSelectedTime(new Date(storedTime));
       }
     };
-    loadNotificationTime();
+    loadSettings();
   }, []);
 
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
-    setShow(Platform.OS === 'ios');
-    setDate(currentDate);
-    saveNotificationTime(currentDate);
-    scheduleNotification(currentDate);
+  const handleTimeChange = (event, selectedDate) => {
+    const currentDate = selectedDate || selectedTime;
+    setShowTimePicker(false);
+    setSelectedTime(currentDate);
   };
 
-  const showMode = (currentMode) => {
-    setShow(true);
-    setMode(currentMode);
-  };
-
-  const showTimepicker = () => {
-    showMode('time');
-  };
-
-  const saveNotificationTime = async (time) => {
-    await AsyncStorage.setItem('notificationTime', time.toString());
-  };
-
-  const scheduleNotification = async (time) => {
-    const storedAuthors = await AsyncStorage.getItem('selectedAuthors');
-    const selectedAuthors = storedAuthors ? JSON.parse(storedAuthors) : [];
-    const authors = selectedAuthors.length
-      ? quotesData.authors.filter((author) => selectedAuthors.includes(author.name))
-      : quotesData.authors.filter((author) => author.name === "John Lennon");
-
-    if (authors.length > 0) {
-      const randomAuthor = authors[Math.floor(Math.random() * authors.length)];
-      const randomQuote = randomAuthor.quotes[Math.floor(Math.random() * randomAuthor.quotes.length)];
-
-      await Notifications.cancelAllScheduledNotificationsAsync();
-
-      await Notifications.scheduleNotificationAsync({
-        content: {
-          title: "Daily Quote",
-          body: `${randomQuote} - ${randomAuthor.name}`,
-        },
-        trigger: {
-          hour: time.getHours(),
-          minute: time.getMinutes(),
-          repeats: true,
-        },
-      });
-    }
-  };
-
-  const sendTestNotification = async () => {
-    const { status } = await Notifications.getPermissionsAsync();
-    if (status !== 'granted') {
-      Alert.alert('Permissions not granted to show notifications');
+  const scheduleNotification = async () => {
+    const storedAuthor = await AsyncStorage.getItem('selectedAuthor');
+    if (!storedAuthor) {
+      Alert.alert('No author selected', 'Please select an author from the settings.');
       return;
     }
 
-    const storedAuthors = await AsyncStorage.getItem('selectedAuthors');
-    const selectedAuthors = storedAuthors ? JSON.parse(storedAuthors) : [];
-    const authors = selectedAuthors.length
-      ? quotesData.authors.filter((author) => selectedAuthors.includes(author.name))
-      : quotesData.authors.filter((author) => author.name === "John Lennon");
+    const author = quotesData.authors.find(author => author.name === storedAuthor);
+    if (!author) {
+      Alert.alert('Author not found', 'The selected author was not found in the database.');
+      return;
+    }
 
-    if (authors.length > 0) {
-      const randomAuthor = authors[Math.floor(Math.random() * authors.length)];
-      const randomQuote = randomAuthor.quotes[Math.floor(Math.random() * randomAuthor.quotes.length)];
+    const randomQuote = author.quotes[Math.floor(Math.random() * author.quotes.length)];
 
-      console.log('Scheduling test notification:', `${randomQuote} - ${randomAuthor.name}`);
+    await Notifications.cancelAllScheduledNotificationsAsync();
 
-      await Notifications.scheduleNotificationAsync({
-        content: {
-          title: "Daily Quote",
-          body: `${randomQuote} - ${randomAuthor.name}`,
-        },
-        trigger: { seconds: 1 },
-      });
-    } else {
-      console.log('No authors found for test notification');
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: `Quote of the day from ${author.name}`,
+        body: randomQuote,
+        data: { quote: randomQuote },
+      },
+      trigger: {
+        hour: selectedTime.getHours(),
+        minute: selectedTime.getMinutes(),
+        repeats: true,
+      },
+    });
+
+    await AsyncStorage.setItem('notificationTime', selectedTime.toISOString());
+    Alert.alert('Notification scheduled', `You'll receive a quote from ${author.name} every day at ${selectedTime.toLocaleTimeString()}`);
+  };
+
+  const requestPermissions = async () => {
+    const { status } = await Notifications.requestPermissionsAsync();
+    if (status !== 'granted') {
+      Alert.alert('Permission required', 'Please enable notifications in your settings.');
     }
   };
+
+  useEffect(() => {
+    requestPermissions();
+  }, []);
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Settings</Text>
-      <View>
-        <Button onPress={showTimepicker} title="Set Notification Time" />
-      </View>
-      {show && (
+      <Text style={styles.cardText}>{selectedTime.toLocaleTimeString()}</Text>
+
+      <TouchableOpacity style={styles.card} onPress={() => setShowTimePicker(true)}>
+        <Ionicons name="alarm-outline" size={24} color="black" style={styles.icon} />
+        <Text style={styles.cardText}>Select Time:</Text>
+      </TouchableOpacity>
+      {showTimePicker && (
         <DateTimePicker
-          testID="dateTimePicker"
-          value={date}
-          mode={mode}
+          value={selectedTime}
+          mode="time"
           is24Hour={true}
           display="default"
-          onChange={onChange}
+          onChange={handleTimeChange}
         />
       )}
-      <View style={styles.buttonContainer}>
-        <Button
-          title="Send Test Notification"
-          onPress={sendTestNotification}
-        />
-      </View>
+      <TouchableOpacity  onPress={scheduleNotification} style={styles.card}>
+        <Ionicons name="checkmark-circle-outline" size={24} color="black" style={styles.icon} />
+        <Text style={styles.cardText}>Save Settings</Text>
+      </TouchableOpacity>
+      <TouchableOpacity  onPress={() => navigation.navigate('Home')} style={styles.card}>
+        <Ionicons name="home-outline" size={24} color="black" style={styles.icon} />
+        <Text style={styles.cardText}>Back to Home</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -130,17 +105,28 @@ const Settings = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
     justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
   },
   title: {
     fontSize: 20,
     marginBottom: 20,
-    textAlign: 'center',
   },
-  buttonContainer: {
-    marginTop: 20,
+  card: {
+    flexDirection: 'row',
     alignItems: 'center',
+    backgroundColor: '#f0f0f0',
+    padding: 9,
+    borderRadius: 10,
+    elevation: 3,
+    marginTop: 10,
+  },
+  icon: {
+    marginRight: 10,
+  },
+  cardText: {
+    fontSize: 16,
   },
 });
 
